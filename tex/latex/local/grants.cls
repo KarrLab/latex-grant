@@ -199,3 +199,6 @@
 
 %citations
 \newcommand{\dontcite}[1]{}
+
+%multiple columns
+\usepackage{multicol}

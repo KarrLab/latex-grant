@@ -12,7 +12,7 @@
 \geometry{margin=1in}
 
 %font
-\usepackage{lmodern}
+\usepackage{times}
 \renewcommand{\familydefault}{\rmdefault}
 
 %font size
@@ -20,3 +20,4 @@
 
 %references
 \ExecuteBibliographyOptions{maxbibnames=1,minbibnames=1}
+\AtEveryBibitem{\clearfield{title}}
