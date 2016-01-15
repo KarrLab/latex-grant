@@ -15,6 +15,10 @@
 \usepackage{times}
 \renewcommand{\familydefault}{\rmdefault}
 
+%paragraph skip
+\setlength{\parskip}{4pt}
+
 %references
 \ExecuteBibliographyOptions{maxbibnames=1,minbibnames=1}
 \AtEveryBibitem{\clearfield{title}}
+\AtEveryBibitem{\clearfield{pages}}
