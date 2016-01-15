@@ -2,7 +2,7 @@
 \ProvidesClass{darpa}[2016/01/12 DARPA class]
 
 \ProcessOptions
-\LoadClass{grants}
+\LoadClass[12pt]{grants}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting
@@ -14,9 +14,6 @@
 %font
 \usepackage{times}
 \renewcommand{\familydefault}{\rmdefault}
-
-%font size
-\fontsize{12pt}{14.4pt}
 
 %references
 \ExecuteBibliographyOptions{maxbibnames=1,minbibnames=1}

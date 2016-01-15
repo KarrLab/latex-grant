@@ -1,8 +1,11 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{grants}[2016/01/12 grants class]
 
+\newcommand{\fntsiz}{11pt}
+\DeclareOption{12pt}{\renewcommand{\fntsiz}{12pt}}
+
 \ProcessOptions
-\LoadClass[11pt,oneside]{book}
+\LoadClass[\fntsiz,oneside]{book}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting
