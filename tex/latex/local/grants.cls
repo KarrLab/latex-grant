@@ -205,3 +205,60 @@
 
 %multiple columns
 \usepackage{multicol}
+
+%%%%%%%%%%%%%%%%%%%%
+%% Cover page
+%%%%%%%%%%%%%%%%%%%%
+\newcommand{\FundingAgency}{}
+\newcommand{\FundingId}{}
+\newcommand{\FundingTitle}{}
+\newcommand{\FundingUrl}{}
+\newcommand{\FundingDeadline}{}
+
+\newcommand{\ProposalTitle}{}
+
+\newcommand{\PiName}{}
+\newcommand{\PiTitle}{}
+\newcommand{\PiDepartment}{}
+\newcommand{\PiInstitution}{}
+\newcommand{\PiAddress}{}
+\newcommand{\PiUrl}{}
+\newcommand{\PiEmail}{}
+\newcommand{\PiPhone}{}
+
+\newcommand{\PoName}{}
+\newcommand{\PoAddress}{}
+\newcommand{\PoEmail}{}
+\newcommand{\PoPhone}{}
+
+\newcommand{\makecoverpage}{
+    {\LARGE\bfseries
+    
+    \ProposalTitle    
+    
+    }
+    \vskip1ex
+    \uline{Funding opportunity}
+    \\\FundingAgency: \FundingTitle (\href{\FundingUrl}{\FundingId})
+    \\\FundingDeadline
+
+    \uline{Applicant}
+    \\\PiName
+    \\\PiTitle
+    \\\PiDepartment
+    \\\PiInstitution
+    \\\PiAddress
+    \\\href{http://\PiUrl}{\PiUrl}
+    \\\href{mailto:\PiEmail}{\PiEmail}
+    \\\PiPhone
+
+    \uline{Program officer}
+    \\\PoName
+    \\\PoAddress
+    \\\href{mailto:\PoEmail}{\PoEmail}
+    \\\PoPhone
+}
+
+
+
+

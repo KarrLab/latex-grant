@@ -1,6 +1,13 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{doe}[2016/01/12 DOE class]
 
+\newcommand{\draftstatus}{isnotdraft}
+\DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
+\DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
+
+\ProcessOptions
+\LoadClass[\draftstatus]{grants}
+
 \ProcessOptions
 \LoadClass{grants}
 
