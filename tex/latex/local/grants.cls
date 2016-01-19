@@ -21,6 +21,8 @@
 \if@compatibility\else
 \DeclareOption{isdraft}
     {\booltrue{isdraft}}
+\DeclareOption{isnotdraft}
+    {\boolfalse{isdraft}}
 \fi
 \ExecuteOptions{draft}
 \ProcessOptions
