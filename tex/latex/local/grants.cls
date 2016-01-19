@@ -2,6 +2,8 @@
 \ProvidesClass{grants}[2016/01/12 grants class]
 
 \newcommand{\fntsiz}{11pt}
+\DeclareOption{10pt}{\renewcommand{\fntsiz}{10pt}}
+\DeclareOption{11pt}{\renewcommand{\fntsiz}{11pt}}
 \DeclareOption{12pt}{\renewcommand{\fntsiz}{12pt}}
 
 \ProcessOptions
