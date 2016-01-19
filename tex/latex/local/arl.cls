@@ -1,8 +1,12 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{arl}[2016/01/19 ARL class]
 
+\newcommand{\draftstatus}{isnotdraft}
+\DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
+\DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
+
 \ProcessOptions
-\LoadClass[12pt]{grants}
+\LoadClass[12pt,\draftstatus]{grants}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting
