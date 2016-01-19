@@ -8,9 +8,6 @@
 \ProcessOptions
 \LoadClass[\draftstatus]{grants}
 
-\ProcessOptions
-\LoadClass{grants}
-
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting
 %%%%%%%%%%%%%%%%%%%%%%
