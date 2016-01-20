@@ -243,7 +243,8 @@
     }
     \vskip1ex
     \uline{Funding opportunity}
-    \\\FundingAgency: {\FundingTitle} (\href{\FundingUrl}{\FundingId})
+    \\\FundingAgency
+    \\{\FundingTitle} (\href{\FundingUrl}{\FundingId})
     \\\FundingDeadline
 
     \uline{Applicant}
