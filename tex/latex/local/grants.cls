@@ -94,7 +94,7 @@
 \newcommand{\chapternonum}[2][chapter]{%
 \phantomsection%
 \addcontentsline{toc}{#1}{#2}%
-\part*{#2}%
+\chapter*{#2}%
 }
 
 \newcommand{\sectionnonum}[2][section]{%
