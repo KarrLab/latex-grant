@@ -52,14 +52,19 @@
 %section style
 \setcounter{secnumdepth}{5}
 \usepackage[compact,explicit]{titlesec}
-\titleformat{\chapter}[hang]{\large\bfseries}{}{0pt}{\large\uppercase{#1}}[]
+
+\titleclass{\part}{top}
+
+\titleformat{\part}[hang]{\centering\LARGE\bfseries}{}{0pt}{\LARGE\MakeUppercase{#1}}[]
+\titleformat{\chapter}[hang]{\large\bfseries}{}{0pt}{\large\MakeUppercase{#1}}[]
 \titleformat{\section}[hang]{\bfseries}{\uline{\thesection.~}}{0ex}{\uline{#1}}[]
 \titleformat{\subsection}[runin]{\bfseries}{\thesubsection.~}{0ex}{#1}[]
 \titleformat{\subsubsection}[runin]{}{\uline{\thesubsubsection.~}}{0ex}{\uline{#1}}[.]
 \titleformat{\paragraph}[runin]{\itshape}{\theparagraph.~}{0ex}{#1}[.]
 \titleformat{\subparagraph}[runin]{}{}{0ex}{\uline{#1}}[:]
 
-\titlespacing*{\chapter}{0pt}{-3.5ex}{*-1}
+\titlespacing*{\part}{0pt}{-3.5ex}{*-1}
+\titlespacing*{\chapter}{0pt}{-3.5ex}{*-0.5}
 \titlespacing*{\section}{0pt}{*0.0}{*-1}
 \titlespacing*{\subsection}{0pt}{*0.0}{*0.5}
 \titlespacing*{\subsubsection}{0pt}{*0.0}{*0.5}
@@ -79,6 +84,18 @@
   \endgroup
 }
 \makeatother
+
+\newcommand{\partnonum}[2][part]{%
+\phantomsection%
+\addcontentsline{toc}{#1}{#2}%
+\part*{#2}%
+}
+
+\newcommand{\chapternonum}[2][chapter]{%
+\phantomsection%
+\addcontentsline{toc}{#1}{#2}%
+\part*{#2}%
+}
 
 \newcommand{\sectionnonum}[2][section]{%
 \phantomsection%
