@@ -55,9 +55,9 @@
 
 \titleclass{\part}{top}
 
-\titleformat{\part}[hang]{\centering\LARGE\bfseries}{}{0pt}{\LARGE\MakeUppercase{#1}}[]
-\titleformat{\chapter}[hang]{\large\bfseries}{}{0pt}{\large\MakeUppercase{#1}}[]
-\titleformat{\section}[hang]{\bfseries}{\uline{\thesection.~}}{0ex}{\uline{#1}}[]
+\titleformat{\part}[block]{\centering\LARGE\bfseries}{}{0pt}{\LARGE\MakeUppercase{#1}}[]
+\titleformat{\chapter}[block]{\large\bfseries}{}{0pt}{\large\MakeUppercase{#1}}[]
+\titleformat{\section}[block]{\bfseries}{\uline{\thesection.~}}{0ex}{\uline{#1}}[]
 \titleformat{\subsection}[runin]{\bfseries}{\thesubsection.~}{0ex}{#1}[]
 \titleformat{\subsubsection}[runin]{}{\uline{\thesubsubsection.~}}{0ex}{\uline{#1}}[.]
 \titleformat{\paragraph}[runin]{\itshape}{\theparagraph.~}{0ex}{#1}[.]
