@@ -24,5 +24,7 @@
 
 %references
 \ExecuteBibliographyOptions{maxbibnames=1,minbibnames=1}
-\AtEveryBibitem{\clearfield{title}}
-\AtEveryBibitem{\clearfield{pages}}
+\DeclareFieldFormat[article]{title}{}
+\DeclareFieldFormat[article]{pages}{}
+\DeclareFieldFormat[online]{url}{}
+\DeclareFieldFormat[online]{urldate}{}
