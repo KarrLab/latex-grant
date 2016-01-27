@@ -17,3 +17,7 @@
 
 %references
 \ExecuteBibliographyOptions{maxbibnames=1,minbibnames=1}
+\DeclareFieldFormat[article]{title}{}
+\DeclareFieldFormat[article]{pages}{}
+\DeclareFieldFormat[online]{url}{}
+\DeclareFieldFormat[online]{urldate}{}
