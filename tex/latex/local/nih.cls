@@ -8,12 +8,10 @@
 \ProcessOptions
 \LoadClass[\draftstatus]{grants}
 
-\ProcessOptions
-\LoadClass{grants}
-
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting
 %%%%%%%%%%%%%%%%%%%%%%
 
 %geometry
 \geometry{margin=0.5in}
+\setlength{\parskip}{4pt}
