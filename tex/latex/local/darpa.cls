@@ -4,6 +4,8 @@
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
 \DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
+\ExecuteOptions{isdraft, isnotdraft}
+\ProcessOptions
 
 \ProcessOptions
 \LoadClass[12pt,\draftstatus]{grants}
@@ -26,5 +28,24 @@
 \ExecuteBibliographyOptions{maxbibnames=1,minbibnames=1}
 \DeclareFieldFormat[article]{title}{}
 \DeclareFieldFormat[article]{pages}{}
+\DeclareFieldFormat[article]{volume}{}
+\DeclareFieldFormat[article]{number}{}
 \DeclareFieldFormat[online]{url}{}
 \DeclareFieldFormat[online]{urldate}{}
+
+\renewbibmacro*{issue+date}{%
+  \iffieldundef{year}
+    {}
+    {%
+      \iffieldundef{issue}
+        {\printtext[]{\usebibmacro{date}}}
+        {%
+          \printtext[parens]{%
+            \printfield{issue}%
+            \setunit*{\addspace}%
+            \usebibmacro{date}%
+          }%
+        }%
+    }%
+  \newunit  
+}

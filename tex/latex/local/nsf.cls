@@ -4,9 +4,11 @@
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
 \DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
+\ExecuteOptions{isdraft, isnotdraft}
+\ProcessOptions
 
 \ProcessOptions
-\LoadClass[\draftstatus]{grants}
+\LoadClass[\draftstatus, 10pt]{grants}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting
@@ -14,3 +16,6 @@
 
 %geometry
 \geometry{margin=1in}
+
+%hyperlinking
+\hypersetup{bookmarksdepth=3, draft=false}

@@ -24,7 +24,7 @@
 \DeclareOption{isnotdraft}
     {\boolfalse{isdraft}}
 \fi
-\ExecuteOptions{draft}
+\ExecuteOptions{isdraft, isnotdraft}
 \ProcessOptions
 
 %font
@@ -47,7 +47,7 @@
 
 %paragraph spacing
 \setlength{\parindent}{0in}
-\setlength{\parskip}{6pt}
+\setlength{\parskip}{5pt}
 
 %section style
 \setcounter{secnumdepth}{5}
@@ -135,6 +135,9 @@
 \setlist[itemize]{topsep=0pt, partopsep=0ex, parsep=0ex, itemsep=0ex, leftmargin=1em}
 \setlist[enumerate]{topsep=0pt, partopsep=0ex, parsep=0ex, itemsep=0ex, leftmargin=1.3em}
 
+%hyphenation
+\usepackage{hyphenat}
+
 %bibliography
 %\usepackage[super,compress, numbers]{natbib}
 \usepackage[backend=bibtex8,style=nature,citestyle=numeric-comp,sorting=none,maxbibnames=30,minbibnames=30,autocite=superscript,firstinits=true,terseinits=true]{biblatex}
@@ -167,7 +170,7 @@
     }%
 }
 \setlength{\bibitemsep}{0pt}
-\setlength{\biblabelsep}{4pt}
+\setlength{\biblabelsep}{5pt}
 
 %images
 \usepackage{graphicx}
@@ -180,9 +183,9 @@
 \usepackage[font=footnotesize,labelfont=bf,singlelinecheck=false,labelsep=period, skip=2pt]{caption}
 
 %urls
-\usepackage[bookmarksdepth=3, breaklinks=true]{hyperref}
+\usepackage[breaklinks=true]{hyperref}
 \ifbool{isdraft}{
-    \hypersetup{draft=false}
+    \hypersetup{bookmarksdepth=3, draft=false}
 }{
     \hypersetup{bookmarksdepth=0, draft=true}
 }
@@ -209,7 +212,7 @@
 %line numbers
 \usepackage{lineno}
 
-\setlength{\textfloatsep}{6.0pt plus 0.6pt minus 1.2pt}
+\setlength{\textfloatsep}{5.0pt plus 0.5pt minus 1pt}
 
 \usepackage{tabularx}
 \usepackage{booktabs}

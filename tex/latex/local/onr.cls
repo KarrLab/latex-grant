@@ -4,6 +4,8 @@
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
 \DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
+\ExecuteOptions{isdraft, isnotdraft}
+\ProcessOptions
 
 \ProcessOptions
 \LoadClass[12pt,\draftstatus]{grants}
