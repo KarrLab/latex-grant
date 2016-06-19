@@ -16,6 +16,3 @@
 
 %geometry
 \geometry{margin=1in}
-
-%hyperlinking
-\hypersetup{bookmarksdepth=3, draft=false}

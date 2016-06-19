@@ -185,9 +185,13 @@
 %urls
 \usepackage[breaklinks=true]{hyperref}
 \ifbool{isdraft}{
-    \hypersetup{bookmarksdepth=3, draft=false}
+    \hypersetup{bookmarksdepth=3}
 }{
-    \hypersetup{bookmarksdepth=0, draft=true}
+    \let\oldcite\cite
+    \renewcommand{\cite}[1]{%
+      \begin{NoHyper}\oldcite{#1}\end{NoHyper}%
+    }
+    \hypersetup{bookmarksdepth=0}
 }
 
 %tables
