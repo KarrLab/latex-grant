@@ -183,15 +183,14 @@
 \usepackage[font=footnotesize,labelfont=bf,singlelinecheck=false,labelsep=period, skip=2pt]{caption}
 
 %urls
-\usepackage[breaklinks=true]{hyperref}
 \ifbool{isdraft}{
-    \hypersetup{bookmarksdepth=3}
+    \usepackage[breaklinks=true, bookmarksdepth=3]{hyperref}
 }{
+    \usepackage[breaklinks=true, bookmarksdepth=0, bookmarks=false]{hyperref}
     \let\oldcite\cite
     \renewcommand{\cite}[1]{%
       \begin{NoHyper}\oldcite{#1}\end{NoHyper}%
     }
-    \hypersetup{bookmarksdepth=0}
 }
 
 %tables
