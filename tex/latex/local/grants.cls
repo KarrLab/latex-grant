@@ -1,31 +1,49 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{grants}[2016/01/12 grants class]
 
+%%%%%%%%%%%%%%%%%%%%%%
+%% options
+%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{etoolbox}
+
 \newcommand{\fntsiz}{11pt}
 \DeclareOption{10pt}{\renewcommand{\fntsiz}{10pt}}
 \DeclareOption{11pt}{\renewcommand{\fntsiz}{11pt}}
 \DeclareOption{12pt}{\renewcommand{\fntsiz}{12pt}}
 
+\newbool{isdraft}
+\boolfalse{isdraft}
+\DeclareOption{isdraft}
+    {\booltrue{isdraft}}
+\DeclareOption{isnotdraft}
+    {\boolfalse{isdraft}}
+    
+\newbool{issectioncompact}
+\boolfalse{issectioncompact}
+\DeclareOption{issectioncompact}
+    {\booltrue{issectioncompact}}
+\DeclareOption{isnotsectioncompact}
+    {\boolfalse{issectioncompact}}
+    
+\newbool{isbibcompact}
+\boolfalse{isbibcompact}
+\DeclareOption{isbibcompact}
+    {\booltrue{isbibcompact}}
+\DeclareOption{isnotbibcompact}
+    {\boolfalse{isbibcompact}}
+
+\ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
 \ProcessOptions
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% load book class
+%%%%%%%%%%%%%%%%%%%%%%
 \LoadClass[\fntsiz,oneside]{book}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting
 %%%%%%%%%%%%%%%%%%%%%%
-
-%draft
-\usepackage{etoolbox}
-\newbool{isdraft}
-\boolfalse{isdraft}
-
-\if@compatibility\else
-\DeclareOption{isdraft}
-    {\booltrue{isdraft}}
-\DeclareOption{isnotdraft}
-    {\boolfalse{isdraft}}
-\fi
-\ExecuteOptions{isdraft, isnotdraft}
-\ProcessOptions
 
 %font
 \usepackage[english]{babel}
@@ -113,6 +131,11 @@
 \subsubsection*{#2}%
 }
 
+\ifbool{issectioncompact}{
+    \titleformat{\section}[runin]{\bfseries}{\uline{\thesection.~}}{0ex}{\uline{#1}}[.]
+    \titlespacing*{\section}{0pt}{*0.0}{*0.5}
+}{}
+
 %page numbering
 \usepackage[auto]{chappg}
 
@@ -171,6 +194,40 @@
 }
 \setlength{\bibitemsep}{0pt}
 \setlength{\biblabelsep}{5pt}
+
+\ifbool{isbibcompact}{
+    \defbibenvironment{bibliography}
+        {\inparaenum[ (1)]}
+        {\endinparaenum}
+        {\item}
+      
+    \renewcommand{\bibfont}{\footnotesize}
+  
+    \ExecuteBibliographyOptions{maxbibnames=1,minbibnames=1}
+    \DeclareFieldFormat[article]{title}{}
+    \DeclareFieldFormat[article]{pages}{}
+    \DeclareFieldFormat[article]{volume}{}
+    \DeclareFieldFormat[article]{number}{}
+    \DeclareFieldFormat[online]{url}{}
+    \DeclareFieldFormat[online]{urldate}{}
+
+    \renewbibmacro*{issue+date}{%
+      \iffieldundef{year}
+        {}
+        {%
+          \iffieldundef{issue}
+            {\printtext[]{\usebibmacro{date}}}
+            {%
+              \printtext[parens]{%
+                \printfield{issue}%
+                \setunit*{\addspace}%
+                \usebibmacro{date}%
+              }%
+            }%
+        }%
+      \newunit  
+    }
+}{}
 
 %images
 \usepackage{graphicx}
@@ -243,6 +300,8 @@
 \newcommand{\FundingDeadline}{}
 
 \newcommand{\ProposalTitle}{}
+\newcommand{\ProposalDurationInYears}{}
+\newcommand{\ProposalCostInMillions}{}
 
 \newcommand{\PiName}{}
 \newcommand{\PiTitle}{}
@@ -252,6 +311,23 @@
 \newcommand{\PiUrl}{}
 \newcommand{\PiEmail}{}
 \newcommand{\PiPhone}{}
+\newcommand{\PiFax}{}
+
+\newcommand{\OtherKeyPersonnel}{}
+
+\newcommand{\LeadOrganizationName}{}
+\newcommand{\LeadOrganizationAddress}{}
+\newcommand{\LeadOrganizationDUNS}{}
+\newcommand{\LeadOrganizationTIN}{}
+\newcommand{\LeadOrganizationCAGE}{}
+
+\newcommand{\AdminName}{}
+\newcommand{\AdminTitle}{}
+\newcommand{\AdminAddress}{}
+\newcommand{\AdminInstitution}{}
+\newcommand{\AdminPhone}{}
+\newcommand{\AdminFax}{}
+\newcommand{\AdminEmail}{}
 
 \newcommand{\PoName}{}
 \newcommand{\PoAddress}{}
@@ -287,6 +363,38 @@
     \\\PoPhone
 }
 
-
-
-
+\newcommand{\makeabstractcoverpage}{
+    \begin{center}\LARGE\textbf{
+    ABSTRACT\\[0.5ex]
+    \FundingId: \FundingTitle\\[0.5ex]
+    \ProposalTitle
+    }\end{center}
+    
+    \textbf{Technical point of contact: \PiName}\\
+    \PiTitle\\
+    \PiDepartment\\
+    \PiInstitution\\
+    \PiAddress\\
+    Tel: \PiPhone, Fax: \PiFax, Email: \href{mailto:\PiEmail}{\PiEmail}, Web: \href{http://www.\PiUrl}{\PiUrl} 
+    
+    \textbf{Administrative point of contact: \AdminName}\\
+    \AdminTitle\\
+    \AdminAddress\\
+    \AdminInstitution\\
+    Tel: \AdminPhone, Fax: \AdminFax, Email: \href{mailto:\AdminEmail}{\AdminEmail}
+    
+    \textbf{Lead organization: \LeadOrganizationName}\\
+    \LeadOrganizationAddress\\
+    DUNS number: \LeadOrganizationDUNS\\
+    Taxpayer identification number: \LeadOrganizationTIN\\
+    CAGE code: \LeadOrganizationCAGE
+    
+    \textbf{Other key personnel and primary subcontractors}\\
+    \OtherKeyPersonnel
+    
+    \textbf{Duration: {\ProposalDurationInYears} years}
+    
+    \textbf{Estimated cost: \${\ProposalCostInMillions} million in total costs}
+    
+    \clearpage
+}

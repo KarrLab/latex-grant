@@ -4,11 +4,19 @@
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
 \DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
-\ExecuteOptions{isdraft, isnotdraft}
+
+\newcommand{\sectioncompactstatus}{isnotsectioncompact}
+\DeclareOption{issectioncompact}{\renewcommand{\sectioncompactstatus}{issectioncompact}}
+\DeclareOption{isnotsectioncompact}{\renewcommand{\sectioncompactstatus}{isnotsectioncompact}}
+
+\newcommand{\bibcompactstatus}{isnotbibcompact}
+\DeclareOption{isbibcompact}{\renewcommand{\bibcompactstatus}{isbibcompact}}
+\DeclareOption{isnotbibcompact}{\renewcommand{\bibcompactstatus}{isnotbibcompact}}
+
+\ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
 \ProcessOptions
 
-\ProcessOptions
-\LoadClass[\draftstatus, 10pt]{grants}
+\LoadClass[10pt, \draftstatus, \sectioncompactstatus, \bibcompactstatus]{grants}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting
