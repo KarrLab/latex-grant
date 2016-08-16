@@ -227,6 +227,36 @@
         }%
       \newunit  
     }
+    
+    \renewbibmacro*{name:last-first}[4]{%
+      \ifuseprefix
+        {%
+          \usebibmacro{name:delim}{#3#1}%
+           \usebibmacro{name:hook}{#3#1}%
+           \ifblank{#3}{}
+             {%
+               \ifcapital
+                 {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
+                 {\mkbibnameprefix{#3}\isdot}%
+               \ifpunctmark{'}{}{\addhighpenspace}%
+             }%
+           \mkbibnamelast{#1}\isdot
+           \ifblank{#2}
+             {}{%
+             %\addlowpenspace\mkbibnamefirst{#2}
+             }%
+           \ifblank{#4}{}{\addlowpenspace\mkbibnameaffix{#4}\isdot}%
+        }
+        {%
+          \usebibmacro{name:delim}{#1}%
+          \usebibmacro{name:hook}{#1}%
+          \mkbibnamelast{#1}\isdot
+          \ifblank{#2#3}{}{\addcomma}%
+          %\ifblank{#2}{}{\addlowpenspace\mkbibnamefirst{#2}\isdot}%
+          \ifblank{#3}{}{\addlowpenspace\mkbibnameprefix{#3}\isdot}%
+          \ifblank{#4}{}{\addlowpenspace\mkbibnameaffix{#4}\isdot}%
+        }%
+    }
 }{}
 
 %images
