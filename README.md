@@ -32,3 +32,12 @@ The package is available through TeX Live and MikTeX as `grant`.
 
 \end{document}
 ```
+
+## License
+The example model is released under the [MIT license](LICENSE).
+
+## Development team
+`latex-grant` was developed by [Jonathan Karr](http://www.karrlab.org) at the Icahn School of Medicine at Mount Sinai in New York, USA.
+
+## Questions and comments
+Please contact the [Jonathan Karr](http://www.karrlab.org) with any questions or comments.
