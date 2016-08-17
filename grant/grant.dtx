@@ -1,0 +1,816 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2016 Jonathan Karr <karr@mssm.edu>
+% -----------------------------------------------------------
+%
+% This file may be distributed and/or modified under the conditions of
+% the MIT License. The latest version of this license is in:
+%
+%     https://github.com/KarrLab/latex-grant/blob/master/LICENSE
+%
+% \fi
+%
+
+% \iffalse
+%<*driver>
+\ProvidesFile{grant.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}[2003/12/01]
+%<package>\ProvidesPackage{grant}
+%<*package>
+    [2016/08/17 v0.0.2 Grant package for formatting federal grant applications]
+%</package>
+%
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{enumitem}
+\usepackage{verbatim}
+\setdescription{noitemsep, topsep=0pt, parsep=0pt, partopsep=0pt}
+\OnlyDescription
+\begin{document}
+    \DocInput{grant.dtx}
+\end{document}
+%</driver>
+% \fi
+
+% \CheckSum{524}
+%
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+
+
+% \changes{v0.0.2}{2016/08/17}{Initial version}
+%
+% \GetFileInfo{grant.dtx}
+%
+% \DoNotIndex{\newcommand,\newenvironment}
+
+
+% \title{The \textsf{grant} package \thanks{This document corresponds to \textsf{grant}~\fileversion, dated \filedate.}}
+% \author{Jonathan Karr \\ \texttt{karr@mssm.edu}}
+%
+% \maketitle
+%
+% \section{Introduction}
+%
+% This package provides LaTeX classes to format grant applications for the following federal agencies:
+% \begin{description}[labelindent=0.25in]
+% \item[\texttt{arl}]: Army Research Laboratory
+% \item[\texttt{darpa}]: Defense Advanced Research Projects Agency
+% \item[\texttt{doe}]: Department of Energy
+% \item[\texttt{nih}]: National Institutes of Health
+% \item[\texttt{nrl}]: Naval Research Laboratory
+% \item[\texttt{nsf}]: National Science Foundation
+% \item[\texttt{onr}]: Office of Naval Research
+% \end{description} 
+%
+% \section{Usage}
+% The example below illustrates how to use the \texttt{nsf} class. Substitute \texttt{nsf} for any of the above class names to format applications for other federal agencies.
+%
+% \begin{verbatim}
+% \documentclass{nsf}
+% 
+% \addbibresource{Bibliography.bib}
+% 
+% \begin{document}
+% 
+% \chapter{Project-Summary}
+% ...
+% 
+% \chapter{Project-Description}
+% ...
+% 
+% \chapter{Bibliography \& References Cited}
+% \printbibliography[heading=none]
+% 
+% \end{document}\end{verbatim}
+
+
+% \StopEventually{}
+%
+% \section{Implementation}
+% \begin{macrocode}
+%<*grant>
+% \end{macrocode}
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{grant}[2016/01/12 grant class]
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% options
+%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{etoolbox}
+
+\newcommand{\fntsiz}{11pt}
+\DeclareOption{10pt}{\renewcommand{\fntsiz}{10pt}}
+\DeclareOption{11pt}{\renewcommand{\fntsiz}{11pt}}
+\DeclareOption{12pt}{\renewcommand{\fntsiz}{12pt}}
+
+\newbool{isdraft}
+\boolfalse{isdraft}
+\DeclareOption{isdraft}
+    {\booltrue{isdraft}}
+\DeclareOption{isnotdraft}
+    {\boolfalse{isdraft}}
+    
+\newbool{issectioncompact}
+\boolfalse{issectioncompact}
+\DeclareOption{issectioncompact}
+    {\booltrue{issectioncompact}}
+\DeclareOption{isnotsectioncompact}
+    {\boolfalse{issectioncompact}}
+    
+\newbool{isbibcompact}
+\boolfalse{isbibcompact}
+\DeclareOption{isbibcompact}
+    {\booltrue{isbibcompact}}
+\DeclareOption{isnotbibcompact}
+    {\boolfalse{isbibcompact}}
+
+\ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
+\ProcessOptions
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% load book class
+%%%%%%%%%%%%%%%%%%%%%%
+\LoadClass[\fntsiz,oneside]{book}
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% formatting
+%%%%%%%%%%%%%%%%%%%%%%
+
+%font
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{uarial}
+\renewcommand{\familydefault}{\sfdefault}
+
+%underline
+\usepackage[normalem]{ulem}
+\usepackage{soul}
+
+%spacing
+\usepackage{setspace}
+\singlespacing
+
+%margins
+\usepackage[paperwidth=8.5in, paperheight=11in, margin=1in, footskip=20pt]{geometry}
+
+%paragraph spacing
+\setlength{\parindent}{0in}
+\setlength{\parskip}{5pt}
+
+%section style
+\setcounter{secnumdepth}{5}
+\usepackage[compact,explicit]{titlesec}
+
+\titleclass{\part}{top}
+
+\titleformat{\part}[block]{\centering\LARGE\bfseries}{}{0pt}{\LARGE\MakeUppercase{#1}}[]
+\titleformat{\chapter}[block]{\large\bfseries}{}{0pt}{\large\MakeUppercase{#1}}[]
+\titleformat{\section}[block]{\bfseries}{\uline{\thesection.~}}{0ex}{\uline{#1}}[]
+\titleformat{\subsection}[runin]{\bfseries}{\thesubsection.~}{0ex}{#1}[]
+\titleformat{\subsubsection}[runin]{}{\uline{\thesubsubsection.~}}{0ex}{\uline{#1}}[.]
+\titleformat{\paragraph}[runin]{\itshape}{\theparagraph.~}{0ex}{#1}[.]
+\titleformat{\subparagraph}[runin]{}{}{0ex}{\uline{#1}}[:]
+
+\titlespacing*{\part}{0pt}{-3.5ex}{*-1}
+\titlespacing*{\chapter}{0pt}{-3.5ex}{*-0.5}
+\titlespacing*{\section}{0pt}{*0.0}{*-1}
+\titlespacing*{\subsection}{0pt}{*0.0}{*0.5}
+\titlespacing*{\subsubsection}{0pt}{*0.0}{*0.5}
+\titlespacing*{\paragraph}{0pt}{*0}{*0.5}
+\titlespacing*{\subparagraph}{0pt}{*0}{*0.5}
+
+\renewcommand*\thesection{\arabic{section}}
+\renewcommand*\thesubsection{\Alph{subsection}}
+\renewcommand*\thesubsubsection{\roman{subsubsection}}
+\renewcommand*\theparagraph{\arabic{paragraph}}
+
+\makeatletter
+\newcommand{\chapternotitle}[1]{%
+  \begingroup
+  \let\@makechapterhead\@gobble % make \@makechapterhead do nothing
+  \chapter{#1}
+  \endgroup
+}
+\makeatother
+
+\newcommand{\partnonum}[2][part]{%
+\phantomsection%
+\addcontentsline{toc}{#1}{#2}%
+\part*{#2}%
+}
+
+\newcommand{\chapternonum}[2][chapter]{%
+\phantomsection%
+\addcontentsline{toc}{#1}{#2}%
+\chapter*{#2}%
+}
+
+\newcommand{\sectionnonum}[2][section]{%
+\phantomsection%
+\addcontentsline{toc}{#1}{#2}%
+\section*{#2}%
+}
+\newcommand{\subsectionnonum}[2][subsection]{%
+\phantomsection%
+\addcontentsline{toc}{#1}{#2}%
+\subsection*{#2}%
+}
+\newcommand{\subsubsectionnonum}[2][subsubsection]{%
+\phantomsection%
+\addcontentsline{toc}{#1}{#2}%
+\subsubsection*{#2}%
+}
+
+\ifbool{issectioncompact}{
+    \titleformat{\section}[runin]{\bfseries}{\uline{\thesection.~}}{0ex}{\uline{#1}}[.]
+    \titlespacing*{\section}{0pt}{*0.0}{*0.5}
+}{}
+
+%page numbering
+\usepackage[auto]{chappg}
+
+%header/footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\assignpagestyle{\chapter}{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhf{}
+\ifbool{isdraft}{
+    \lfoot{\small\leftmark}
+    \rfoot{\small\thepage}
+}{}
+
+%lists
+\usepackage{paralist}
+\usepackage{enumitem}
+\setlist[itemize]{topsep=0pt, partopsep=0ex, parsep=0ex, itemsep=0ex, leftmargin=1em}
+\setlist[enumerate]{topsep=0pt, partopsep=0ex, parsep=0ex, itemsep=0ex, leftmargin=1.3em}
+
+%hyphenation
+\usepackage{hyphenat}
+
+%bibliography
+%\usepackage[super,compress, numbers]{natbib}
+\usepackage[backend=bibtex8,style=nature,citestyle=numeric-comp,sorting=none,maxbibnames=30,minbibnames=30,autocite=superscript,firstinits=true,terseinits=true]{biblatex}
+\let\cite=\autocite
+\renewbibmacro*{name:last-first}[4]{%
+  \ifuseprefix
+    {%
+      \usebibmacro{name:delim}{#3#1}%
+       \usebibmacro{name:hook}{#3#1}%
+       \ifblank{#3}{}
+         {%
+           \ifcapital
+             {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
+	         {\mkbibnameprefix{#3}\isdot}%
+           \ifpunctmark{'}{}{\addhighpenspace}%
+         }%
+       \mkbibnamelast{#1}\isdot
+       \ifblank{#2}
+         {}{\addlowpenspace\mkbibnamefirst{#2}}%
+       \ifblank{#4}{}{\addlowpenspace\mkbibnameaffix{#4}\isdot}%
+    }
+    {%
+      \usebibmacro{name:delim}{#1}%
+      \usebibmacro{name:hook}{#1}%
+      \mkbibnamelast{#1}\isdot
+      \ifblank{#2#3}{}{\addcomma}%
+      \ifblank{#2}{}{\addlowpenspace\mkbibnamefirst{#2}\isdot}%
+      \ifblank{#3}{}{\addlowpenspace\mkbibnameprefix{#3}\isdot}%
+      \ifblank{#4}{}{\addlowpenspace\mkbibnameaffix{#4}\isdot}%
+    }%
+}
+\setlength{\bibitemsep}{0pt}
+\setlength{\biblabelsep}{5pt}
+
+\ifbool{isbibcompact}{
+    \defbibenvironment{bibliography}
+        {\inparaenum[ (1)]}
+        {\endinparaenum}
+        {\item}
+      
+    \renewcommand{\bibfont}{\footnotesize}
+  
+    \ExecuteBibliographyOptions{maxbibnames=1,minbibnames=1}
+    \DeclareFieldFormat[article]{title}{}
+    \DeclareFieldFormat[article]{pages}{}
+    \DeclareFieldFormat[article]{volume}{}
+    \DeclareFieldFormat[article]{number}{}
+    \DeclareFieldFormat[online]{url}{}
+    \DeclareFieldFormat[online]{urldate}{}
+
+    \renewbibmacro*{issue+date}{%
+      \iffieldundef{year}
+        {}
+        {%
+          \iffieldundef{issue}
+            {\printtext[]{\usebibmacro{date}}}
+            {%
+              \printtext[parens]{%
+                \printfield{issue}%
+                \setunit*{\addspace}%
+                \usebibmacro{date}%
+              }%
+            }%
+        }%
+      \newunit  
+    }
+    
+    \renewbibmacro*{name:last-first}[4]{%
+      \ifuseprefix
+        {%
+          \usebibmacro{name:delim}{#3#1}%
+           \usebibmacro{name:hook}{#3#1}%
+           \ifblank{#3}{}
+             {%
+               \ifcapital
+                 {\mkbibnameprefix{\MakeCapital{#3}}\isdot}
+                 {\mkbibnameprefix{#3}\isdot}%
+               \ifpunctmark{'}{}{\addhighpenspace}%
+             }%
+           \mkbibnamelast{#1}\isdot
+           \ifblank{#2}
+             {}{%
+             %\addlowpenspace\mkbibnamefirst{#2}
+             }%
+           \ifblank{#4}{}{\addlowpenspace\mkbibnameaffix{#4}\isdot}%
+        }
+        {%
+          \usebibmacro{name:delim}{#1}%
+          \usebibmacro{name:hook}{#1}%
+          \mkbibnamelast{#1}\isdot
+          \ifblank{#2#3}{}{\addcomma}%
+          %\ifblank{#2}{}{\addlowpenspace\mkbibnamefirst{#2}\isdot}%
+          \ifblank{#3}{}{\addlowpenspace\mkbibnameprefix{#3}\isdot}%
+          \ifblank{#4}{}{\addlowpenspace\mkbibnameaffix{#4}\isdot}%
+        }%
+    }
+}{}
+
+%images
+\usepackage{graphicx}
+\DeclareGraphicsExtensions{%
+    .pdf,.PDF,%
+    .png,.PNG,%    
+    .jpg,.jpeg}
+
+%captions
+\usepackage[font=footnotesize,labelfont=bf,singlelinecheck=false,labelsep=period, skip=2pt]{caption}
+
+%urls
+\ifbool{isdraft}{
+    \usepackage[breaklinks=true, bookmarksdepth=3]{hyperref}
+}{
+    \usepackage[breaklinks=true, bookmarksdepth=0, bookmarks=false]{hyperref}
+    \let\oldcite\cite
+    \renewcommand{\cite}[1]{%
+      \begin{NoHyper}\oldcite{#1}\end{NoHyper}%
+    }
+}
+
+%tables
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{ltxtable}
+
+%table, figure numbering
+\renewcommand{\figurename}{Fig.}
+\renewcommand{\tablename}{Tab.}
+\addto\captionsenglish{\renewcommand{\figurename}{Fig.}}
+\addto\captionsenglish{\renewcommand{\tablename}{Tab.}}
+\renewcommand*\thefigure{\arabic{figure}}
+\renewcommand*\thetable{\arabic{table}}
+
+%FloatBarrier
+\usepackage{placeins}
+
+%insert pdf pages
+\usepackage{pdfpages}
+
+%line numbers
+\usepackage{lineno}
+
+\setlength{\textfloatsep}{5.0pt plus 0.5pt minus 1pt}
+
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{wrapfig}
+
+\usepackage{amsmath}
+\usepackage{csquotes}
+
+%comments
+\usepackage[author={}, color=yellow]{pdfcomment}
+
+%citations
+\newcommand{\dontcite}[1]{}
+
+%multiple columns
+\usepackage{multicol}
+
+%%%%%%%%%%%%%%%%%%%%
+%% Cover page
+%%%%%%%%%%%%%%%%%%%%
+\newcommand{\FundingAgency}{}
+\newcommand{\FundingId}{}
+\newcommand{\FundingTitle}{}
+\newcommand{\FundingUrl}{}
+\newcommand{\FundingDeadline}{}
+
+\newcommand{\ProposalTitle}{}
+\newcommand{\ProposalDurationInYears}{}
+\newcommand{\ProposalCostInMillions}{}
+
+\newcommand{\PiName}{}
+\newcommand{\PiTitle}{}
+\newcommand{\PiDepartment}{}
+\newcommand{\PiInstitution}{}
+\newcommand{\PiAddress}{}
+\newcommand{\PiUrl}{}
+\newcommand{\PiEmail}{}
+\newcommand{\PiPhone}{}
+\newcommand{\PiFax}{}
+
+\newcommand{\OtherKeyPersonnel}{}
+
+\newcommand{\LeadOrganizationName}{}
+\newcommand{\LeadOrganizationAddress}{}
+\newcommand{\LeadOrganizationDUNS}{}
+\newcommand{\LeadOrganizationTIN}{}
+\newcommand{\LeadOrganizationCAGE}{}
+
+\newcommand{\AdminName}{}
+\newcommand{\AdminTitle}{}
+\newcommand{\AdminAddress}{}
+\newcommand{\AdminInstitution}{}
+\newcommand{\AdminPhone}{}
+\newcommand{\AdminFax}{}
+\newcommand{\AdminEmail}{}
+
+\newcommand{\PoName}{}
+\newcommand{\PoAddress}{}
+\newcommand{\PoEmail}{}
+\newcommand{\PoPhone}{}
+
+\newcommand{\makecoverpage}{
+    {\LARGE\bfseries
+    
+    \ProposalTitle    
+    
+    }
+    \vskip1ex
+    \uline{Funding opportunity}
+    \\\FundingAgency
+    \\{\FundingTitle} (\href{\FundingUrl}{\FundingId})
+    \\\FundingDeadline
+
+    \uline{Applicant}
+    \\\PiName
+    \\\PiTitle
+    \\\PiDepartment
+    \\\PiInstitution
+    \\\PiAddress
+    \\\href{http://\PiUrl}{\PiUrl}
+    \\\href{mailto:\PiEmail}{\PiEmail}
+    \\\PiPhone
+
+    \uline{Program officer}
+    \\\PoName
+    \\\PoAddress
+    \\\href{mailto:\PoEmail}{\PoEmail}
+    \\\PoPhone
+}
+
+\newcommand{\makeabstractcoverpage}{
+    \begin{center}\LARGE\textbf{
+    ABSTRACT\\[0.5ex]
+    \FundingId: \FundingTitle\\[0.5ex]
+    \ProposalTitle
+    }\end{center}
+    
+    \textbf{Technical point of contact: \PiName}\\
+    \PiTitle\\
+    \PiDepartment\\
+    \PiInstitution\\
+    \PiAddress\\
+    Tel: \PiPhone, Fax: \PiFax, Email: \href{mailto:\PiEmail}{\PiEmail}, Web: \href{http://www.\PiUrl}{\PiUrl} 
+    
+    \textbf{Administrative point of contact: \AdminName}\\
+    \AdminTitle\\
+    \AdminAddress\\
+    \AdminInstitution\\
+    Tel: \AdminPhone, Fax: \AdminFax, Email: \href{mailto:\AdminEmail}{\AdminEmail}
+    
+    \textbf{Lead organization: \LeadOrganizationName}\\
+    \LeadOrganizationAddress\\
+    DUNS number: \LeadOrganizationDUNS\\
+    Taxpayer identification number: \LeadOrganizationTIN\\
+    CAGE code: \LeadOrganizationCAGE
+    
+    \textbf{Other key personnel and primary subcontractors}\\
+    \OtherKeyPersonnel
+    
+    \textbf{Duration: {\ProposalDurationInYears} years}
+    
+    \textbf{Estimated cost: \${\ProposalCostInMillions} million in total costs}
+    
+    \clearpage
+}
+
+
+% \begin{macrocode}
+%</grant>
+% \end{macrocode}
+
+
+% \begin{macrocode}
+%<*arl>
+% \end{macrocode}
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{arl}[2016/01/19 ARL class]
+
+\newcommand{\draftstatus}{isnotdraft}
+\DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
+\DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
+
+\newcommand{\sectioncompactstatus}{isnotsectioncompact}
+\DeclareOption{issectioncompact}{\renewcommand{\sectioncompactstatus}{issectioncompact}}
+\DeclareOption{isnotsectioncompact}{\renewcommand{\sectioncompactstatus}{isnotsectioncompact}}
+
+\newcommand{\bibcompactstatus}{isnotbibcompact}
+\DeclareOption{isbibcompact}{\renewcommand{\bibcompactstatus}{isbibcompact}}
+\DeclareOption{isnotbibcompact}{\renewcommand{\bibcompactstatus}{isnotbibcompact}}
+
+\ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
+\ProcessOptions
+
+\LoadClass[12pt, \draftstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% formatting
+%%%%%%%%%%%%%%%%%%%%%%
+
+%geometry
+\geometry{margin=1in}
+
+%font
+\usepackage{times}
+\renewcommand{\familydefault}{\rmdefault}
+
+%paragraph skip
+\setlength{\parskip}{4pt}
+
+% \begin{macrocode}
+%</arl>
+% \end{macrocode}
+
+
+% \begin{macrocode}
+%<*darpa>
+% \end{macrocode}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{darpa}[2016/01/12 DARPA class]
+
+\newcommand{\draftstatus}{isnotdraft}
+\DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
+\DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
+
+\newcommand{\sectioncompactstatus}{isnotsectioncompact}
+\DeclareOption{issectioncompact}{\renewcommand{\sectioncompactstatus}{issectioncompact}}
+\DeclareOption{isnotsectioncompact}{\renewcommand{\sectioncompactstatus}{isnotsectioncompact}}
+
+\newcommand{\bibcompactstatus}{isnotbibcompact}
+\DeclareOption{isbibcompact}{\renewcommand{\bibcompactstatus}{isbibcompact}}
+\DeclareOption{isnotbibcompact}{\renewcommand{\bibcompactstatus}{isnotbibcompact}}
+
+\ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
+\ProcessOptions
+
+\LoadClass[12pt, \draftstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% formatting
+%%%%%%%%%%%%%%%%%%%%%%
+
+%geometry
+\geometry{margin=1in}
+
+%font
+\usepackage{times}
+\renewcommand{\familydefault}{\rmdefault}
+
+%paragraph skip
+\setlength{\parskip}{4pt}
+% \begin{macrocode}
+%</darpa>
+% \end{macrocode}
+
+
+% \begin{macrocode}
+%<*doe>
+% \end{macrocode}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{doe}[2016/01/12 DOE class]
+
+\newcommand{\draftstatus}{isnotdraft}
+\DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
+\DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
+
+\newcommand{\sectioncompactstatus}{isnotsectioncompact}
+\DeclareOption{issectioncompact}{\renewcommand{\sectioncompactstatus}{issectioncompact}}
+\DeclareOption{isnotsectioncompact}{\renewcommand{\sectioncompactstatus}{isnotsectioncompact}}
+
+\newcommand{\bibcompactstatus}{isnotbibcompact}
+\DeclareOption{isbibcompact}{\renewcommand{\bibcompactstatus}{isbibcompact}}
+\DeclareOption{isnotbibcompact}{\renewcommand{\bibcompactstatus}{isnotbibcompact}}
+
+\ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
+\ProcessOptions
+
+\LoadClass[\draftstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% formatting
+%%%%%%%%%%%%%%%%%%%%%%
+
+%geometry
+\geometry{margin=1in}
+% \begin{macrocode}
+%</doe>
+% \end{macrocode}
+
+
+% \begin{macrocode}
+%<*nih>
+% \end{macrocode}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{nih}[2016/01/12 NIH class]
+
+\newcommand{\draftstatus}{isnotdraft}
+\DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
+\DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
+
+\newcommand{\sectioncompactstatus}{isnotsectioncompact}
+\DeclareOption{issectioncompact}{\renewcommand{\sectioncompactstatus}{issectioncompact}}
+\DeclareOption{isnotsectioncompact}{\renewcommand{\sectioncompactstatus}{isnotsectioncompact}}
+
+\newcommand{\bibcompactstatus}{isnotbibcompact}
+\DeclareOption{isbibcompact}{\renewcommand{\bibcompactstatus}{isbibcompact}}
+\DeclareOption{isnotbibcompact}{\renewcommand{\bibcompactstatus}{isnotbibcompact}}
+
+\ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
+\ProcessOptions
+
+\LoadClass[\draftstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% formatting
+%%%%%%%%%%%%%%%%%%%%%%
+
+%geometry
+\geometry{margin=0.5in}
+\setlength{\parskip}{4pt}
+% \begin{macrocode}
+%</nih>
+% \end{macrocode}
+
+
+% \begin{macrocode}
+%<*nrl>
+% \end{macrocode}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{nrl}[2016/01/19 NRL class]
+
+\newcommand{\draftstatus}{isnotdraft}
+\DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
+\DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
+
+\newcommand{\sectioncompactstatus}{isnotsectioncompact}
+\DeclareOption{issectioncompact}{\renewcommand{\sectioncompactstatus}{issectioncompact}}
+\DeclareOption{isnotsectioncompact}{\renewcommand{\sectioncompactstatus}{isnotsectioncompact}}
+
+\newcommand{\bibcompactstatus}{isnotbibcompact}
+\DeclareOption{isbibcompact}{\renewcommand{\bibcompactstatus}{isbibcompact}}
+\DeclareOption{isnotbibcompact}{\renewcommand{\bibcompactstatus}{isnotbibcompact}}
+
+\ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
+\ProcessOptions
+
+\LoadClass[12pt, \draftstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% formatting
+%%%%%%%%%%%%%%%%%%%%%%
+
+%geometry
+\geometry{margin=1in}
+
+%font
+\usepackage{times}
+\renewcommand{\familydefault}{\rmdefault}
+
+%paragraph skip
+\setlength{\parskip}{4pt}
+% \begin{macrocode}
+%</nrl>
+% \end{macrocode}
+
+
+% \begin{macrocode}
+%<*nsf>
+% \end{macrocode}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{nsf}[2016/01/12 NSF class]
+
+\newcommand{\draftstatus}{isnotdraft}
+\DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
+\DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
+
+\newcommand{\sectioncompactstatus}{isnotsectioncompact}
+\DeclareOption{issectioncompact}{\renewcommand{\sectioncompactstatus}{issectioncompact}}
+\DeclareOption{isnotsectioncompact}{\renewcommand{\sectioncompactstatus}{isnotsectioncompact}}
+
+\newcommand{\bibcompactstatus}{isnotbibcompact}
+\DeclareOption{isbibcompact}{\renewcommand{\bibcompactstatus}{isbibcompact}}
+\DeclareOption{isnotbibcompact}{\renewcommand{\bibcompactstatus}{isnotbibcompact}}
+
+\ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
+\ProcessOptions
+
+\LoadClass[10pt, \draftstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% formatting
+%%%%%%%%%%%%%%%%%%%%%%
+
+%geometry
+\geometry{margin=1in}
+% \begin{macrocode}
+%</nsf>
+% \end{macrocode}
+
+
+% \begin{macrocode}
+%<*onr>
+% \end{macrocode}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{onr}[2016/01/19 ONR class]
+
+\newcommand{\draftstatus}{isnotdraft}
+\DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
+\DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
+
+\newcommand{\sectioncompactstatus}{isnotsectioncompact}
+\DeclareOption{issectioncompact}{\renewcommand{\sectioncompactstatus}{issectioncompact}}
+\DeclareOption{isnotsectioncompact}{\renewcommand{\sectioncompactstatus}{isnotsectioncompact}}
+
+\newcommand{\bibcompactstatus}{isnotbibcompact}
+\DeclareOption{isbibcompact}{\renewcommand{\bibcompactstatus}{isbibcompact}}
+\DeclareOption{isnotbibcompact}{\renewcommand{\bibcompactstatus}{isnotbibcompact}}
+
+\ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
+\ProcessOptions
+
+\LoadClass[12pt, \draftstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% formatting
+%%%%%%%%%%%%%%%%%%%%%%
+
+%geometry
+\geometry{margin=1in}
+
+%font
+\usepackage{times}
+\renewcommand{\familydefault}{\rmdefault}
+
+%paragraph skip
+\setlength{\parskip}{4pt}
+% \begin{macrocode}
+%</onr>
+% \end{macrocode}
+%
+% \Finale

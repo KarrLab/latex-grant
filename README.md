@@ -11,7 +11,22 @@ LaTeX classes for formatting scientific documents, including grant proposals.
 * `onr`: Office of Naval Research
 
 ## Installation
+
+### Tex Live/MikTeX
 The package is available through TeX Live and MikTeX as `grant`.
+
+### Manual install
+
+1. Compile the LaTeX classes
+
+  ```
+  cd /path/to/repo
+  cd grant
+  latex grant.ins
+  mkdir -p /path/to/repo/tex/latex/grant/
+  mv *.cls /path/to/repo/tex/latex/grant/
+  ```
+2. Add `/path/to/repo` to your list of LaTeX root directories
 
 ## Example usage
 ```

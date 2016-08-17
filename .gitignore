@@ -1,0 +1,11 @@
+# compiled files
+*.aux
+*.cls
+*.log
+*.pdf
+tex/
+*.zip
+
+#duplicated files
+grant/README.md
+grant/LICENSE
