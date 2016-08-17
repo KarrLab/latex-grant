@@ -1,6 +1,6 @@
 # latex-grant
 
-LaTeX classes for formatting scientific documents, including grant proposals.
+LaTeX classes for formatting federal grant proposals:
 * `grants`: Base class for formatting grant proposals
 * `arl`: Army Research Laboratory
 * `darpa`: Defense Advanced Research Projects Agency
