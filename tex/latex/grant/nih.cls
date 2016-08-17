@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{nrl}[2016/01/19 NRL class]
+\ProvidesClass{nih}[2016/01/12 NIH class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
@@ -16,18 +16,12 @@
 \ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
 \ProcessOptions
 
-\LoadClass[12pt, \draftstatus, \sectioncompactstatus, \bibcompactstatus]{grants}
+\LoadClass[\draftstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting
 %%%%%%%%%%%%%%%%%%%%%%
 
 %geometry
-\geometry{margin=1in}
-
-%font
-\usepackage{times}
-\renewcommand{\familydefault}{\rmdefault}
-
-%paragraph skip
+\geometry{margin=0.5in}
 \setlength{\parskip}{4pt}

@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{darpa}[2016/01/12 DARPA class]
+\ProvidesClass{arl}[2016/01/19 ARL class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
@@ -16,7 +16,7 @@
 \ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
 \ProcessOptions
 
-\LoadClass[12pt, \draftstatus, \sectioncompactstatus, \bibcompactstatus]{grants}
+\LoadClass[12pt, \draftstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting

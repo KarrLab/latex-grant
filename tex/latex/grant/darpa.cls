@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{doe}[2016/01/12 DOE class]
+\ProvidesClass{darpa}[2016/01/12 DARPA class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
@@ -16,7 +16,7 @@
 \ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
 \ProcessOptions
 
-\LoadClass[\draftstatus, \sectioncompactstatus, \bibcompactstatus]{grants}
+\LoadClass[12pt, \draftstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting
@@ -24,3 +24,10 @@
 
 %geometry
 \geometry{margin=1in}
+
+%font
+\usepackage{times}
+\renewcommand{\familydefault}{\rmdefault}
+
+%paragraph skip
+\setlength{\parskip}{4pt}

@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{grants}[2016/01/12 grants class]
+\ProvidesClass{grant}[2016/01/12 grant class]
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% options

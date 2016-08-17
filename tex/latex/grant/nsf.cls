@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{nih}[2016/01/12 NIH class]
+\ProvidesClass{nsf}[2016/01/12 NSF class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
@@ -16,12 +16,11 @@
 \ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
 \ProcessOptions
 
-\LoadClass[\draftstatus, \sectioncompactstatus, \bibcompactstatus]{grants}
+\LoadClass[10pt, \draftstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting
 %%%%%%%%%%%%%%%%%%%%%%
 
 %geometry
-\geometry{margin=0.5in}
-\setlength{\parskip}{4pt}
+\geometry{margin=1in}
