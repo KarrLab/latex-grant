@@ -1,4 +1,4 @@
-<!-- [![CTAN package](https://img.shields.io/badge/ctan-latest-orange.svg)](https://www.ctan.org/pkg/grant) -->
+[![CTAN package](https://img.shields.io/badge/ctan-latest-orange.svg)](https://www.ctan.org/pkg/grant)
 [![Documentation](https://readthedocs.org/projects/gdoc-down/badge/?version=latest)](https://github.com/KarrLab/latex-grant)
 [![License](https://img.shields.io/github/license/KarrLab/latex-grant.svg)](LICENSE)
 
@@ -16,10 +16,8 @@ LaTeX classes for formatting federal grant proposals:
 
 ## Installation
 
-<!--
 ### Tex Live/MikTeX
 The package is available through TeX Live and MikTeX as `grant`.
--->
 
 ### Manual install
 
