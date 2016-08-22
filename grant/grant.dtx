@@ -18,7 +18,7 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[2003/12/01]
 %<package>\ProvidesPackage{grant}
 %<*package>
-    [2016/08/17 v0.0.2 Grant package for formatting federal grant applications]
+    [2016/08/22 v0.0.3 Grant package for formatting federal grant applications]
 %</package>
 %
 %
@@ -69,13 +69,13 @@
 %
 % This package provides LaTeX classes to format grant applications for the following federal agencies:
 % \begin{description}[labelindent=0.25in]
-% \item[\texttt{arl}]: Army Research Laboratory
-% \item[\texttt{darpa}]: Defense Advanced Research Projects Agency
-% \item[\texttt{doe}]: Department of Energy
-% \item[\texttt{nih}]: National Institutes of Health
-% \item[\texttt{nrl}]: Naval Research Laboratory
-% \item[\texttt{nsf}]: National Science Foundation
-% \item[\texttt{onr}]: Office of Naval Research
+% \item[\texttt{grant-arl}]: Army Research Laboratory
+% \item[\texttt{grant-darpa}]: Defense Advanced Research Projects Agency
+% \item[\texttt{grant-doe}]: Department of Energy
+% \item[\texttt{grant-nih}]: National Institutes of Health
+% \item[\texttt{grant-nrl}]: Naval Research Laboratory
+% \item[\texttt{grant-nsf}]: National Science Foundation
+% \item[\texttt{grant-onr}]: Office of Naval Research
 % \end{description} 
 %
 % \section{Usage}
@@ -546,11 +546,11 @@
 
 
 % \begin{macrocode}
-%<*arl>
+%<*grant-arl>
 % \end{macrocode}
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{arl}[2016/01/19 ARL class]
+\ProvidesClass{grant-arl}[2016/01/19 ARL class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
@@ -584,15 +584,15 @@
 \setlength{\parskip}{4pt}
 
 % \begin{macrocode}
-%</arl>
+%</grant-arl>
 % \end{macrocode}
 
 
 % \begin{macrocode}
-%<*darpa>
+%<*grant-darpa>
 % \end{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{darpa}[2016/01/12 DARPA class]
+\ProvidesClass{grant-darpa}[2016/01/12 DARPA class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
@@ -625,15 +625,15 @@
 %paragraph skip
 \setlength{\parskip}{4pt}
 % \begin{macrocode}
-%</darpa>
+%</grant-darpa>
 % \end{macrocode}
 
 
 % \begin{macrocode}
-%<*doe>
+%<*grant-doe>
 % \end{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{doe}[2016/01/12 DOE class]
+\ProvidesClass{grant-doe}[2016/01/12 DOE class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
@@ -659,15 +659,15 @@
 %geometry
 \geometry{margin=1in}
 % \begin{macrocode}
-%</doe>
+%</grant-doe>
 % \end{macrocode}
 
 
 % \begin{macrocode}
-%<*nih>
+%<*grant-nih>
 % \end{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{nih}[2016/01/12 NIH class]
+\ProvidesClass{grant-nih}[2016/01/12 NIH class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
@@ -694,15 +694,15 @@
 \geometry{margin=0.5in}
 \setlength{\parskip}{4pt}
 % \begin{macrocode}
-%</nih>
+%</grant-nih>
 % \end{macrocode}
 
 
 % \begin{macrocode}
-%<*nrl>
+%<*grant-nrl>
 % \end{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{nrl}[2016/01/19 NRL class]
+\ProvidesClass{grant-nrl}[2016/01/19 NRL class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
@@ -735,15 +735,15 @@
 %paragraph skip
 \setlength{\parskip}{4pt}
 % \begin{macrocode}
-%</nrl>
+%</grant-nrl>
 % \end{macrocode}
 
 
 % \begin{macrocode}
-%<*nsf>
+%<*grant-nsf>
 % \end{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{nsf}[2016/01/12 NSF class]
+\ProvidesClass{grant-nsf}[2016/01/12 NSF class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
@@ -769,15 +769,15 @@
 %geometry
 \geometry{margin=1in}
 % \begin{macrocode}
-%</nsf>
+%</grant-nsf>
 % \end{macrocode}
 
 
 % \begin{macrocode}
-%<*onr>
+%<*grant-onr>
 % \end{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{onr}[2016/01/19 ONR class]
+\ProvidesClass{grant-onr}[2016/01/19 ONR class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
@@ -810,7 +810,7 @@
 %paragraph skip
 \setlength{\parskip}{4pt}
 % \begin{macrocode}
-%</onr>
+%</grant-onr>
 % \end{macrocode}
 %
 % \Finale

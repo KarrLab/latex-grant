@@ -4,15 +4,15 @@
 
 # latex-grant
 
-LaTeX classes for formatting federal grant proposals:
+LaTeX classes for formatting scientific documents, including grant proposals.
 * `grants`: Base class for formatting grant proposals
-* `arl`: Army Research Laboratory
-* `darpa`: Defense Advanced Research Projects Agency
-* `doe`: Department of Energy
-* `nih`: National Institutes of Health
-* `nrl`: Naval Research Laboratory
-* `nsf`: National Science Foundation
-* `onr`: Office of Naval Research
+* `grant-arl`: Army Research Laboratory
+* `grant-darpa`: Defense Advanced Research Projects Agency
+* `grant-doe`: Department of Energy
+* `grant-nih`: National Institutes of Health
+* `grant-nrl`: Naval Research Laboratory
+* `grant-nsf`: National Science Foundation
+* `grant-onr`: Office of Naval Research
 
 ## Installation
 
@@ -34,7 +34,7 @@ The package is available through TeX Live and MikTeX as `grant`.
 
 ## Example usage
 ```
-\documentclass{nsf}
+\documentclass{grant-nsf}
 
 \addbibresource{Bibliography.bib}
 
