@@ -27,10 +27,10 @@ The package is available through TeX Live and MikTeX as `grant`.
   cd /path/to/repo
   cd grant
   latex grant.ins
-  mkdir -p /path/to/repo/tex/latex/grant/
-  mv *.cls /path/to/repo/tex/latex/grant/
+  mkdir -p /path/to/repo/texmf/tex/latex/grant/
+  mv *.cls /path/to/repo/texmf/tex/latex/grant/
   ```
-2. Add `/path/to/repo` to your list of LaTeX root directories
+2. Add `/path/to/repo/texmf` to your list of LaTeX root directories
 
 ## Example usage
 ```
