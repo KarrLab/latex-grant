@@ -72,7 +72,7 @@
 %
 % This package provides LaTeX classes to format grant applications for the following federal agencies:
 % \begin{description}[labelindent=0.25in]
-% \item[\texttt{grant-arl}]: Army Research Laboratory
+% \item[\texttt{grant-aro}]: Army Research Office
 % \item[\texttt{grant-darpa}]: Defense Advanced Research Projects Agency
 % \item[\texttt{grant-doe}]: Department of Energy
 % \item[\texttt{grant-nih}]: National Institutes of Health
@@ -131,14 +131,21 @@
     {\booltrue{isdraft}}
 \DeclareOption{isnotdraft}
     {\boolfalse{isdraft}}
-    
+
+\newbool{iswhitepaper}
+\boolfalse{iswhitepaper}
+\DeclareOption{iswhitepaper}
+    {\booltrue{iswhitepaper}}
+\DeclareOption{isnotwhitepaper}
+    {\boolfalse{iswhitepaper}}
+
 \newbool{issectioncompact}
 \boolfalse{issectioncompact}
 \DeclareOption{issectioncompact}
     {\booltrue{issectioncompact}}
 \DeclareOption{isnotsectioncompact}
     {\boolfalse{issectioncompact}}
-    
+
 \newbool{isbibcompact}
 \boolfalse{isbibcompact}
 \DeclareOption{isbibcompact}
@@ -146,7 +153,7 @@
 \DeclareOption{isnotbibcompact}
     {\boolfalse{isbibcompact}}
 
-\ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
+\ExecuteOptions{isdraft, isnotdraft, iswhitepaper, isnotwhitepaper, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
 \ProcessOptions
 
 %%%%%%%%%%%%%%%%%%%%%%
@@ -244,6 +251,10 @@
 \subsubsection*{#2}%
 }
 
+\ifbool{iswhitepaper}{
+    \titleformat{\section}[runin]{\bfseries}{\uline{\thesection.~}}{0ex}{\uline{#1}}[:]
+}{}
+
 \ifbool{issectioncompact}{
     \titleformat{\section}[runin]{\bfseries}{\uline{\thesection.~}}{0ex}{\uline{#1}}[.]
     \titlespacing*{\section}{0pt}{*0.0}{*0.5}
@@ -263,6 +274,12 @@
 \ifbool{isdraft}{
     \lfoot{\small\leftmark}
     \rfoot{\small\thepage}
+}{}
+
+\ifbool{iswhitepaper}{
+    \lfoot{}
+    \rfoot{}
+    \cfoot{\small\thepage}
 }{}
 
 %lists
@@ -317,10 +334,17 @@
     \renewcommand{\bibfont}{\footnotesize}
   
     \ExecuteBibliographyOptions{maxbibnames=1,minbibnames=1}
+    
     \DeclareFieldFormat[article]{title}{}
     \DeclareFieldFormat[article]{pages}{}
     \DeclareFieldFormat[article]{volume}{}
     \DeclareFieldFormat[article]{number}{}
+    
+    \DeclareFieldFormat[inproceedings]{title}{}
+    \DeclareFieldFormat[inproceedings]{pages}{}
+    \DeclareFieldFormat[inproceedings]{volume}{}
+    \DeclareFieldFormat[inproceedings]{number}{}
+    
     \DeclareFieldFormat[online]{url}{}
     \DeclareFieldFormat[online]{urldate}{}
 
@@ -477,6 +501,8 @@
 \newcommand{\PoEmail}{}
 \newcommand{\PoPhone}{}
 
+\newcommand{\FundingIdTitle}{\FundingId\ifdefempty{\FundingTitle}{}{: \FundingTitle}}
+
 \newcommand{\makecoverpage}{
     {\LARGE\bfseries
     
@@ -486,7 +512,7 @@
     \vskip1ex
     \uline{Funding opportunity}
     \\\FundingAgency
-    \\{\FundingTitle} (\href{\FundingUrl}{\FundingId})
+    \\\FundingIdTitle (\href{\FundingUrl}{\FundingId})
     \\\FundingDeadline
 
     \uline{Applicant}
@@ -506,12 +532,36 @@
     \\\PoPhone
 }
 
+\newcommand{\AbstractName}{Abstract}
+\newcommand{\AbstractOtherPersonnelName}{Other key personnel and primary subcontractors}
+\providetoggle{AbstractIsCentered}
+\providetoggle{AbstractShowAdminPOC}
+\providetoggle{AbstractShowLeadOrg}
+\providetoggle{AbstractShowOtherPersonnel}
+\providetoggle{AbstractShowDuration}
+\providetoggle{AbstractShowCost}
+\settoggle{AbstractIsCentered}{false}
+\settoggle{AbstractShowAdminPOC}{true}
+\settoggle{AbstractShowLeadOrg}{true}
+\settoggle{AbstractShowOtherPersonnel}{true}
+\settoggle{AbstractShowDuration}{true}
+\settoggle{AbstractShowCost}{true}
+
+
 \newcommand{\makeabstractcoverpage}{
-    \begin{center}\LARGE\textbf{
-    ABSTRACT\\[0.5ex]
-    \FundingId: \FundingTitle\\[0.5ex]
-    \ProposalTitle
+    {\setlength{\parskip}{12pt}
+   
+    \iftoggle{AbstractIsCentered}{
+    \centering
+    }{}
+    
+    \begin{center}\textbf{
+    \LARGE{\MakeUppercase{\AbstractName}}\\[18pt]
+    \LARGE{\FundingId}\\
+    \large{\FundingTitle}\\[18pt]
+    \LARGE{\ProposalTitle}
     }\end{center}
+    \vskip-8pt
     
     \textbf{Technical point of contact: \PiName}\\
     \PiTitle\\
@@ -520,25 +570,32 @@
     \PiAddress\\
     Tel: \PiPhone, Fax: \PiFax, Email: \href{mailto:\PiEmail}{\PiEmail}, Web: \href{http://www.\PiUrl}{\PiUrl} 
     
+    \iftoggle{AbstractShowAdminPOC}{
     \textbf{Administrative point of contact: \AdminName}\\
     \AdminTitle\\
     \AdminAddress\\
     \AdminInstitution\\
     Tel: \AdminPhone, Fax: \AdminFax, Email: \href{mailto:\AdminEmail}{\AdminEmail}
+    }{}
     
+    \iftoggle{AbstractShowLeadOrg}{
     \textbf{Lead organization: \LeadOrganizationName}\\
     \LeadOrganizationAddress\\
     DUNS number: \LeadOrganizationDUNS\\
     Taxpayer identification number: \LeadOrganizationTIN\\
     CAGE code: \LeadOrganizationCAGE
+    }{}
     
-    \textbf{Other key personnel and primary subcontractors}\\
+    \iftoggle{AbstractShowOtherPersonnel}{
+    \textbf{\AbstractOtherPersonnelName}\\
     \OtherKeyPersonnel
+    }{}
     
-    \textbf{Duration: {\ProposalDurationInYears} years}
+    \iftoggle{AbstractShowDuration}{\textbf{Duration: {\ProposalDurationInYears} years}}{}
     
-    \textbf{Estimated cost: \${\ProposalCostInMillions} million in total costs}
+    \iftoggle{AbstractShowCost}{\textbf{Estimated cost: \${\ProposalCostInMillions} million in total costs}}{}
     
+    }
     \clearpage
 }
 
@@ -549,15 +606,19 @@
 
 
 % \begin{macrocode}
-%<*grant-arl>
+%<*grant-aro>
 % \end{macrocode}
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{grant-arl}[2016/01/19 ARL class]
+\ProvidesClass{grant-aro}[2016/01/19 ARO class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
 \DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
+
+\newcommand{\whitepaperstatus}{isnotwhitepaper}
+\DeclareOption{iswhitepaper}{\renewcommand{\whitepaperstatus}{iswhitepaper}}
+\DeclareOption{isnotwhitepaper}{\renewcommand{\whitepaperstatus}{isnotwhitepaper}}
 
 \newcommand{\sectioncompactstatus}{isnotsectioncompact}
 \DeclareOption{issectioncompact}{\renewcommand{\sectioncompactstatus}{issectioncompact}}
@@ -567,10 +628,10 @@
 \DeclareOption{isbibcompact}{\renewcommand{\bibcompactstatus}{isbibcompact}}
 \DeclareOption{isnotbibcompact}{\renewcommand{\bibcompactstatus}{isnotbibcompact}}
 
-\ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
+\ExecuteOptions{isdraft, isnotdraft, iswhitepaper, isnotwhitepaper, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
 \ProcessOptions
 
-\LoadClass[12pt, \draftstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
+\LoadClass[12pt, \draftstatus, \whitepaperstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting
@@ -587,7 +648,7 @@
 \setlength{\parskip}{4pt}
 
 % \begin{macrocode}
-%</grant-arl>
+%</grant-aro>
 % \end{macrocode}
 
 
@@ -601,6 +662,10 @@
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
 \DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
 
+\newcommand{\whitepaperstatus}{isnotwhitepaper}
+\DeclareOption{iswhitepaper}{\renewcommand{\whitepaperstatus}{iswhitepaper}}
+\DeclareOption{isnotwhitepaper}{\renewcommand{\whitepaperstatus}{isnotwhitepaper}}
+
 \newcommand{\sectioncompactstatus}{isnotsectioncompact}
 \DeclareOption{issectioncompact}{\renewcommand{\sectioncompactstatus}{issectioncompact}}
 \DeclareOption{isnotsectioncompact}{\renewcommand{\sectioncompactstatus}{isnotsectioncompact}}
@@ -609,10 +674,10 @@
 \DeclareOption{isbibcompact}{\renewcommand{\bibcompactstatus}{isbibcompact}}
 \DeclareOption{isnotbibcompact}{\renewcommand{\bibcompactstatus}{isnotbibcompact}}
 
-\ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
+\ExecuteOptions{isdraft, isnotdraft, iswhitepaper, isnotwhitepaper, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
 \ProcessOptions
 
-\LoadClass[12pt, \draftstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
+\LoadClass[12pt, \draftstatus, \whitepaperstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting
@@ -642,6 +707,10 @@
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
 \DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
 
+\newcommand{\whitepaperstatus}{isnotwhitepaper}
+\DeclareOption{iswhitepaper}{\renewcommand{\whitepaperstatus}{iswhitepaper}}
+\DeclareOption{isnotwhitepaper}{\renewcommand{\whitepaperstatus}{isnotwhitepaper}}
+
 \newcommand{\sectioncompactstatus}{isnotsectioncompact}
 \DeclareOption{issectioncompact}{\renewcommand{\sectioncompactstatus}{issectioncompact}}
 \DeclareOption{isnotsectioncompact}{\renewcommand{\sectioncompactstatus}{isnotsectioncompact}}
@@ -650,10 +719,10 @@
 \DeclareOption{isbibcompact}{\renewcommand{\bibcompactstatus}{isbibcompact}}
 \DeclareOption{isnotbibcompact}{\renewcommand{\bibcompactstatus}{isnotbibcompact}}
 
-\ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
+\ExecuteOptions{isdraft, isnotdraft, iswhitepaper, isnotwhitepaper, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
 \ProcessOptions
 
-\LoadClass[\draftstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
+\LoadClass[11pt, \draftstatus, \whitepaperstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting
@@ -661,6 +730,26 @@
 
 %geometry
 \geometry{margin=1in}
+
+%font
+\usepackage{times}
+\renewcommand{\familydefault}{\rmdefault}
+
+%%%%%%%%%%%%%%%%%%%%%
+%% cover page
+%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\makeabstractcoverpage}{    
+    \titlespacing*{\chapter}{0pt}{-4.4ex}{*-1}
+    {\centering
+    \chapter*{\centerline{\ProposalTitle}}
+    \PiName, \PiTitle\\
+    \PiDepartment, \PiInstitution\\
+    \PiPhone, \href{mailto:\PiEmail}{\PiEmail}, \href{http://www.\PiUrl}{\PiUrl}\\
+    DOE/Office of Science Program Office\\
+    Funding Opportunity Announcement Number: \FundingId\\
+    }
+}
+
 % \begin{macrocode}
 %</grant-doe>
 % \end{macrocode}
@@ -676,6 +765,10 @@
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
 \DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
 
+\newcommand{\whitepaperstatus}{isnotwhitepaper}
+\DeclareOption{iswhitepaper}{\renewcommand{\whitepaperstatus}{iswhitepaper}}
+\DeclareOption{isnotwhitepaper}{\renewcommand{\whitepaperstatus}{isnotwhitepaper}}
+
 \newcommand{\sectioncompactstatus}{isnotsectioncompact}
 \DeclareOption{issectioncompact}{\renewcommand{\sectioncompactstatus}{issectioncompact}}
 \DeclareOption{isnotsectioncompact}{\renewcommand{\sectioncompactstatus}{isnotsectioncompact}}
@@ -684,10 +777,10 @@
 \DeclareOption{isbibcompact}{\renewcommand{\bibcompactstatus}{isbibcompact}}
 \DeclareOption{isnotbibcompact}{\renewcommand{\bibcompactstatus}{isnotbibcompact}}
 
-\ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
+\ExecuteOptions{isdraft, isnotdraft, iswhitepaper, isnotwhitepaper, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
 \ProcessOptions
 
-\LoadClass[\draftstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
+\LoadClass[\draftstatus, \whitepaperstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting
@@ -711,6 +804,10 @@
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
 \DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
 
+\newcommand{\whitepaperstatus}{isnotwhitepaper}
+\DeclareOption{iswhitepaper}{\renewcommand{\whitepaperstatus}{iswhitepaper}}
+\DeclareOption{isnotwhitepaper}{\renewcommand{\whitepaperstatus}{isnotwhitepaper}}
+
 \newcommand{\sectioncompactstatus}{isnotsectioncompact}
 \DeclareOption{issectioncompact}{\renewcommand{\sectioncompactstatus}{issectioncompact}}
 \DeclareOption{isnotsectioncompact}{\renewcommand{\sectioncompactstatus}{isnotsectioncompact}}
@@ -719,10 +816,10 @@
 \DeclareOption{isbibcompact}{\renewcommand{\bibcompactstatus}{isbibcompact}}
 \DeclareOption{isnotbibcompact}{\renewcommand{\bibcompactstatus}{isnotbibcompact}}
 
-\ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
+\ExecuteOptions{isdraft, isnotdraft, iswhitepaper, isnotwhitepaper, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
 \ProcessOptions
 
-\LoadClass[12pt, \draftstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
+\LoadClass[12pt, \draftstatus, \whitepaperstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting
@@ -752,6 +849,10 @@
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
 \DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
 
+\newcommand{\whitepaperstatus}{isnotwhitepaper}
+\DeclareOption{iswhitepaper}{\renewcommand{\whitepaperstatus}{iswhitepaper}}
+\DeclareOption{isnotwhitepaper}{\renewcommand{\whitepaperstatus}{isnotwhitepaper}}
+
 \newcommand{\sectioncompactstatus}{isnotsectioncompact}
 \DeclareOption{issectioncompact}{\renewcommand{\sectioncompactstatus}{issectioncompact}}
 \DeclareOption{isnotsectioncompact}{\renewcommand{\sectioncompactstatus}{isnotsectioncompact}}
@@ -760,10 +861,10 @@
 \DeclareOption{isbibcompact}{\renewcommand{\bibcompactstatus}{isbibcompact}}
 \DeclareOption{isnotbibcompact}{\renewcommand{\bibcompactstatus}{isnotbibcompact}}
 
-\ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
+\ExecuteOptions{isdraft, isnotdraft, iswhitepaper, isnotwhitepaper, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
 \ProcessOptions
 
-\LoadClass[10pt, \draftstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
+\LoadClass[10pt, \draftstatus, \whitepaperstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting
@@ -786,6 +887,10 @@
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
 \DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
 
+\newcommand{\whitepaperstatus}{isnotwhitepaper}
+\DeclareOption{iswhitepaper}{\renewcommand{\whitepaperstatus}{iswhitepaper}}
+\DeclareOption{isnotwhitepaper}{\renewcommand{\whitepaperstatus}{isnotwhitepaper}}
+
 \newcommand{\sectioncompactstatus}{isnotsectioncompact}
 \DeclareOption{issectioncompact}{\renewcommand{\sectioncompactstatus}{issectioncompact}}
 \DeclareOption{isnotsectioncompact}{\renewcommand{\sectioncompactstatus}{isnotsectioncompact}}
@@ -794,10 +899,10 @@
 \DeclareOption{isbibcompact}{\renewcommand{\bibcompactstatus}{isbibcompact}}
 \DeclareOption{isnotbibcompact}{\renewcommand{\bibcompactstatus}{isnotbibcompact}}
 
-\ExecuteOptions{isdraft, isnotdraft, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
+\ExecuteOptions{isdraft, isnotdraft, iswhitepaper, isnotwhitepaper, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
 \ProcessOptions
 
-\LoadClass[12pt, \draftstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
+\LoadClass[12pt, \draftstatus, \whitepaperstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% formatting
@@ -812,6 +917,29 @@
 
 %paragraph skip
 \setlength{\parskip}{4pt}
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% abstract
+%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\AbstractName}{White paper}
+\settoggle{AbstractIsCentered}{true}
+\settoggle{AbstractShowAdminPOC}{false}
+\settoggle{AbstractShowLeadOrg}{false}
+\settoggle{AbstractShowOtherPersonnel}{false}
+\settoggle{AbstractShowDuration}{false}
+\settoggle{AbstractShowCost}{false}
+
+\ifbool{iswhitepaper}{
+    \titleformat{\section}[block]{\bfseries}{\uline{\thesection.~}}{0ex}{\uline{#1}}[]
+    \titleformat{\subsection}[runin]{\bfseries}{\thesubsection.~}{0ex}{#1}[.]
+    \titleformat{\subsubsection}[runin]{}{\uline{\thesubsubsection.~}}{0ex}{\uline{#1}}[.]
+    
+    \titlespacing*{\section}{0pt}{*0.0}{*-1}
+    
+    \renewcommand{\bibfont}{\normalsize}
+}{}
+
+
 % \begin{macrocode}
 %</grant-onr>
 % \end{macrocode}
