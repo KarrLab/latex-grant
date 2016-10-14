@@ -6,7 +6,8 @@
 
 LaTeX classes for formatting scientific documents, including grant proposals.
 * `grants`: Base class for formatting grant proposals
-* `grant-arl`: Army Research Laboratory
+* `grant-afosr`: Air Force Office of Scientific Research
+* `grant-aro`: Army Research Office
 * `grant-darpa`: Defense Advanced Research Projects Agency
 * `grant-doe`: Department of Energy
 * `grant-nih`: National Institutes of Health

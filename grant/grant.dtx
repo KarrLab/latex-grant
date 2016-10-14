@@ -72,6 +72,7 @@
 %
 % This package provides LaTeX classes to format grant applications for the following federal agencies:
 % \begin{description}[labelindent=0.25in]
+% \item[\texttt{grant-afosr}]: Air Force Office of Scientific Research
 % \item[\texttt{grant-aro}]: Army Research Office
 % \item[\texttt{grant-darpa}]: Defense Advanced Research Projects Agency
 % \item[\texttt{grant-doe}]: Department of Energy
@@ -604,11 +605,77 @@
 %</grant>
 % \end{macrocode}
 
+% \begin{macrocode}
+%<*grant-afosr>
+% \end{macrocode}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{grant-afosr}[2016/01/19 AFOSR class]
+
+\newcommand{\draftstatus}{isnotdraft}
+\DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
+\DeclareOption{isnotdraft}{\renewcommand{\draftstatus}{isnotdraft}}
+
+\newcommand{\whitepaperstatus}{isnotwhitepaper}
+\DeclareOption{iswhitepaper}{\renewcommand{\whitepaperstatus}{iswhitepaper}}
+\DeclareOption{isnotwhitepaper}{\renewcommand{\whitepaperstatus}{isnotwhitepaper}}
+
+\newcommand{\sectioncompactstatus}{isnotsectioncompact}
+\DeclareOption{issectioncompact}{\renewcommand{\sectioncompactstatus}{issectioncompact}}
+\DeclareOption{isnotsectioncompact}{\renewcommand{\sectioncompactstatus}{isnotsectioncompact}}
+
+\newcommand{\bibcompactstatus}{isnotbibcompact}
+\DeclareOption{isbibcompact}{\renewcommand{\bibcompactstatus}{isbibcompact}}
+\DeclareOption{isnotbibcompact}{\renewcommand{\bibcompactstatus}{isnotbibcompact}}
+
+\ExecuteOptions{isdraft, isnotdraft, iswhitepaper, isnotwhitepaper, issectioncompact, isnotsectioncompact, isbibcompact, isnotbibcompact}
+\ProcessOptions
+
+\LoadClass[12pt, \draftstatus, \whitepaperstatus, \sectioncompactstatus, \bibcompactstatus]{grant}
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% formatting
+%%%%%%%%%%%%%%%%%%%%%%
+
+%geometry
+\geometry{margin=1in}
+
+%font
+\usepackage{times}
+\renewcommand{\familydefault}{\rmdefault}
+
+%paragraph skip
+\setlength{\parskip}{4pt}
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% abstract
+%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\AbstractName}{White paper}
+\settoggle{AbstractIsCentered}{true}
+\settoggle{AbstractShowAdminPOC}{false}
+\settoggle{AbstractShowLeadOrg}{false}
+\settoggle{AbstractShowOtherPersonnel}{false}
+\settoggle{AbstractShowDuration}{false}
+\settoggle{AbstractShowCost}{false}
+
+\ifbool{iswhitepaper}{
+    \titleformat{\section}[block]{\bfseries}{\uline{\thesection.~}}{0ex}{\uline{#1}}[]
+    \titleformat{\subsection}[runin]{\bfseries}{\thesubsection.~}{0ex}{#1}[.]
+    \titleformat{\subsubsection}[runin]{}{\uline{\thesubsubsection.~}}{0ex}{\uline{#1}}[.]
+    
+    \titlespacing*{\section}{0pt}{*0.0}{*-1}
+    
+    \renewcommand{\bibfont}{\normalsize}
+}{}
+
+
+% \begin{macrocode}
+%</grant-afosr>
+% \end{macrocode}
+
 
 % \begin{macrocode}
 %<*grant-aro>
 % \end{macrocode}
-
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{grant-aro}[2016/01/19 ARO class]
 
@@ -646,6 +713,28 @@
 
 %paragraph skip
 \setlength{\parskip}{4pt}
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% abstract
+%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\AbstractName}{White paper}
+\settoggle{AbstractIsCentered}{true}
+\settoggle{AbstractShowAdminPOC}{false}
+\settoggle{AbstractShowLeadOrg}{false}
+\settoggle{AbstractShowOtherPersonnel}{false}
+\settoggle{AbstractShowDuration}{false}
+\settoggle{AbstractShowCost}{false}
+
+\ifbool{iswhitepaper}{
+    \titleformat{\section}[block]{\bfseries}{\uline{\thesection.~}}{0ex}{\uline{#1}}[]
+    \titleformat{\subsection}[runin]{\bfseries}{\thesubsection.~}{0ex}{#1}[.]
+    \titleformat{\subsubsection}[runin]{}{\uline{\thesubsubsection.~}}{0ex}{\uline{#1}}[.]
+    
+    \titlespacing*{\section}{0pt}{*0.0}{*-1}
+    
+    \renewcommand{\bibfont}{\normalsize}
+}{}
+
 
 % \begin{macrocode}
 %</grant-aro>
