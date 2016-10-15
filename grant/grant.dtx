@@ -254,7 +254,9 @@
 
 \ifbool{iswhitepaper}{
     \titleformat{\section}[runin]{\bfseries}{\uline{\thesection.~}}{0ex}{\uline{#1}}[:]
-}{}
+}{
+    \usepackage[auto]{chappg}
+}
 
 \ifbool{issectioncompact}{
     \titleformat{\section}[runin]{\bfseries}{\uline{\thesection.~}}{0ex}{\uline{#1}}[.]
@@ -262,7 +264,6 @@
 }{}
 
 %page numbering
-\usepackage[auto]{chappg}
 
 %header/footer
 \usepackage{fancyhdr}
@@ -719,9 +720,9 @@
 %%%%%%%%%%%%%%%%%%%%%%
 \renewcommand{\AbstractName}{White paper}
 \settoggle{AbstractIsCentered}{true}
-\settoggle{AbstractShowAdminPOC}{false}
-\settoggle{AbstractShowLeadOrg}{false}
-\settoggle{AbstractShowOtherPersonnel}{false}
+\settoggle{AbstractShowAdminPOC}{true}
+\settoggle{AbstractShowLeadOrg}{true}
+\settoggle{AbstractShowOtherPersonnel}{true}
 \settoggle{AbstractShowDuration}{false}
 \settoggle{AbstractShowCost}{false}
 
