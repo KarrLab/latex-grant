@@ -1,6 +1,6 @@
 % \iffalse meta-comment
 %
-% Copyright (C) 2016 Jonathan Karr <karr@mssm.edu>
+% Copyright (C) 2016-2019 Jonathan Karr <karr@mssm.edu>
 % -----------------------------------------------------------
 %
 % This file may be distributed and/or modified under the conditions of
@@ -18,7 +18,7 @@
 %<package>\NeedsTeXFormat{LaTeX2e}[2003/12/01]
 %<package>\ProvidesPackage{grant}
 %<*package>
-    [2016/08/22 v0.0.4 Grant package for formatting federal grant applications]
+    [2019/02/26 v0.0.5 Grant package for formatting federal grant applications]
 %</package>
 %
 %
@@ -53,6 +53,7 @@
 %%   Right brace   \}     Tilde         \~}
 
 
+% \changes{v0.0.5}{2019/02/26}{Adding examples}
 % \changes{v0.0.4}{2016/09/26}{Debugging class renaming and .dtx file for pdf compilation}
 % \changes{v0.0.3}{2016/08/22}{Rename classes to grant-*.cls}
 % \changes{v0.0.2}{2016/08/17}{Packaging with ins, dtx files}
@@ -113,7 +114,7 @@
 
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{grant}[2016/01/12 grant class]
+\ProvidesClass{grant}[2019/02/26 grant class]
 
 %%%%%%%%%%%%%%%%%%%%%%
 %% options
@@ -620,7 +621,7 @@
 %<*grant-afosr>
 % \end{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{grant-afosr}[2016/01/19 AFOSR class]
+\ProvidesClass{grant-afosr}[2019/02/26 AFOSR class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
@@ -688,7 +689,7 @@
 %<*grant-aro>
 % \end{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{grant-aro}[2016/01/19 ARO class]
+\ProvidesClass{grant-aro}[2019/02/26 ARO class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
@@ -756,7 +757,7 @@
 %<*grant-darpa>
 % \end{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{grant-darpa}[2016/01/12 DARPA class]
+\ProvidesClass{grant-darpa}[2019/02/26 DARPA class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
@@ -801,7 +802,7 @@
 %<*grant-doe>
 % \end{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{grant-doe}[2016/01/12 DOE class]
+\ProvidesClass{grant-doe}[2019/02/26 DOE class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
@@ -859,7 +860,7 @@
 %<*grant-nih>
 % \end{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{grant-nih}[2016/01/12 NIH class]
+\ProvidesClass{grant-nih}[2019/02/26 NIH class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
@@ -898,7 +899,7 @@
 %<*grant-nrl>
 % \end{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{grant-nrl}[2016/01/19 NRL class]
+\ProvidesClass{grant-nrl}[2019/02/26 NRL class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
@@ -943,7 +944,7 @@
 %<*grant-nsf>
 % \end{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{grant-nsf}[2016/01/12 NSF class]
+\ProvidesClass{grant-nsf}[2019/02/26 NSF class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
@@ -981,7 +982,7 @@
 %<*grant-onr>
 % \end{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{grant-onr}[2016/01/19 ONR class]
+\ProvidesClass{grant-onr}[2019/02/26 ONR class]
 
 \newcommand{\draftstatus}{isnotdraft}
 \DeclareOption{isdraft}{\renewcommand{\draftstatus}{isdraft}}
